@@ -1,0 +1,62 @@
+
+/**
+This class solves Hoping problem between compartments
+**/
+public class HopAlgorithm {
+
+    static int[] input;
+    static int N = 5;
+    static int minCount = 0;
+    static int targetCompartment;
+
+    public static void main(String[] args) {
+
+        input = new int[N];
+        buildCompartmentsWithJetpack();
+
+        targetCompartment = 4;
+
+        // start hoping from 1st compartment
+        hop(0, 0);
+
+        System.out.println("Min Hopes : " + minCount);
+
+    }
+
+    public static void buildCompartmentsWithJetpack() {
+        input[0] = 2;
+        input[1] = 3;
+        input[2] = 1;
+        input[3] = 1;
+        input[4] = 1;
+    }
+
+    public static void hop(int rootIndex, int countHops) {
+        System.out.println("hop rootIndex: " + rootIndex + " , countHops: " + countHops);
+        if (rootIndex == targetCompartment) {
+            System.out.println("Reched Target: " + rootIndex + " , countHops: " + countHops);
+            // we reached
+            // countHops++;
+            setMinCount(countHops);
+            return;
+        }
+
+        // Iterate all possibility to hope from current compartment index
+        for(int i = 1; i <= input[rootIndex]; i++) {
+            if(minCount > 0 && countHops > minCount) {
+                return;
+            }
+            hop(rootIndex + i, countHops + 1);
+        }
+    }
+
+    public static void setMinCount(int countHops) {
+        if (minCount == 0) {
+            minCount = countHops;
+        }
+        if (countHops < minCount) {
+            minCount = countHops;
+        }
+    }
+
+}
